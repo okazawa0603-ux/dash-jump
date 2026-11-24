@@ -259,8 +259,8 @@ export default function App() {
       const currentSpeed = isBlocked ? 0 : config.speed;
       distance += currentSpeed;
 
-      currentScore = Math.floor(distance / 10) + currentCoins * 50;
-      setScore(currentScore);
+      // currentScore = Math.floor(distance / 10) + currentCoins * 50;
+      // setScore(currentScore);
 
       if (player.starTimer > 0) player.starTimer--;
 
@@ -346,7 +346,11 @@ export default function App() {
 
         if (enemy.x < -50) enemies.splice(i, 1);
       }
-
+      currentScore = Math.floor(distance / 10) + currentCoins * 50;
+      if (frameCount % 6 === 0) {
+        setScore(currentScore);
+        setCoins(currentCoins);
+      }
       player.isGrounded = groundedThisFrame;
 
       if (player.y > canvas.height + 0) {
@@ -371,7 +375,6 @@ export default function App() {
           } else {
             currentCoins += 1;
           }
-          setCoins(currentCoins);
         }
 
         if (item.x < -50) items.splice(i, 1);
