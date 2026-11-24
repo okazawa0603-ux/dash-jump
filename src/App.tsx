@@ -281,6 +281,12 @@ export default function App() {
 
       let groundedThisFrame = false;
 
+      if (overGap && player.y + player.height > groundY + 25) {
+        triggerExplosion(player.x, player.y);
+        gameOver();
+        return;
+      }
+
       if (!overGap && nextY + player.height >= groundY) {
         player.y = groundY - player.height;
         player.vy = 0;
@@ -343,7 +349,7 @@ export default function App() {
 
       player.isGrounded = groundedThisFrame;
 
-      if (player.y > canvas.height + 50) {
+      if (player.y > canvas.height + 0) {
         triggerExplosion(player.x, player.y);
         gameOver();
         return;
@@ -533,7 +539,7 @@ export default function App() {
 
     const gameOver = () => {
       cancelAnimationFrame(animId);
-      setTimeout(() => setGameState('GAMEOVER'), 400);
+      setTimeout(() => setGameState('GAMEOVER'), 100);
     };
 
     const gameClear = (finalScore: number) => {
@@ -585,23 +591,29 @@ export default function App() {
         </div>
       )}
 
-      {gameState === 'GAMEOVER' && (
+{gameState === 'GAMEOVER' && (
         <div className="overlay red">
-          <h1>GAME OVER</h1>
+          <h1>ゲームオーバー</h1>
           <p>スコア: {score}</p>
           <button className="start-btn" onClick={() => setGameState('PLAYING')}>
             もう一度挑戦！
+          </button>
+          <button className="back-btn" onClick={() => setGameState('START')}>
+            難易度を選ぶ
           </button>
         </div>
       )}
 
       {gameState === 'CLEAR' && (
         <div className="overlay gold">
-          <h1>🎉 GOAL CLEAR!! 🎉</h1>
+          <h1>🎉 ゴールクリア！！ 🎉</h1>
           <p>1分完走おめでとう！</p>
           <p>最終スコア: {score}</p>
           <button className="start-btn" onClick={() => setGameState('PLAYING')}>
             もう一度遊ぶ
+          </button>
+          <button className="back-btn dark" onClick={() => setGameState('START')}>
+            難易度を選ぶ
           </button>
         </div>
       )}
