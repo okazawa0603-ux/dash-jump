@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 type Difficulty = 'easy' | 'normal' | 'hard';
